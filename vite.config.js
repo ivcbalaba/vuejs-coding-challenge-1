@@ -11,13 +11,13 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://cqu9arlxha.execute-api.us-east-1.amazonaws.com",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "/dev/challenge1"),
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "https://cqu9arlxha.execute-api.us-east-1.amazonaws.com",
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/api/, "/dev/challenge1"),
+  //     },
+  //   },
+  // },
 });

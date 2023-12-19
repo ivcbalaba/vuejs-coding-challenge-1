@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
 
+const API_URL =
+  "https://cqu9arlxha.execute-api.us-east-1.amazonaws.com/dev/challenge1";
+
 export const useApiStore = defineStore("api", {
   state: () => ({
     data: null,
@@ -9,8 +12,8 @@ export const useApiStore = defineStore("api", {
     async fetchAllCards() {
       try {
         const response = await fetch(
-          // "https://cqu9arlxha.execute-api.us-east-1.amazonaws.com/dev/challenge1/all"
-          "/api/all"
+          `${API_URL}/all`
+          // "/api/all"
         );
 
         const data = await response.json();
@@ -21,14 +24,11 @@ export const useApiStore = defineStore("api", {
     },
     async fetchOneCard(cardNumber) {
       try {
-        const headers = new Headers();
-        headers.append("card_number", cardNumber);
+        // const headers = new Headers();
+        // headers.append("card_number", cardNumber);
         const response = await fetch(
-          // "https://cqu9arlxha.execute-api.us-east-1.amazonaws.com/dev/challenge1/one",
-          "/api/one",
-          {
-            headers,
-          }
+          `${API_URL}/${cardNumber}`
+          // "/api/one",
         );
         const data = await response.json();
         this.card = data.item;
@@ -36,16 +36,36 @@ export const useApiStore = defineStore("api", {
         console.error("Error fetching data:", error);
       }
     },
+    // async fetchOneCard(cardNumber) {
+    //   try {
+    //     const headers = new Headers();
+    //     headers.append("card_number", cardNumber);
+    //     const response = await fetch(
+    //       "https://cqu9arlxha.execute-api.us-east-1.amazonaws.com/dev/challenge1/one",
+    //       // "/api/one",
+    //       {
+    //         headers,
+    //       }
+    //     );
+    //     const data = await response.json();
+    //     this.card = data.item;
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // },
     async addCard(formData) {
-      console.log(formData);
       try {
-        const response = await fetch("/api", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        const response = await fetch(
+          `${API_URL}`,
+          // "/api",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
         const result = await response.json();
         console.log("Card added successfully:", result);
       } catch (error) {
