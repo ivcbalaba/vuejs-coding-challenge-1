@@ -1,17 +1,31 @@
 <script setup>
-import { ref } from 'vue';
 
-const card = ref({
-    "card_number": "4444-1000-2000-3000",
-    "first_name": "Marcelo",
-    "last_name": "Del Pilar",
-    "membership_tier": "bronze",
-    "user_description": "Marcelo is a very particular customer. He knit-picks everything but he tips very well if you induldge all of his requests."
-})
+import { ref, onMounted } from 'vue';
+import { useApiStore } from '../stores/apiStore.js';
+import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+
+const apiStore = useApiStore();
+const route = useRoute();
+const { card } = storeToRefs(apiStore);
+const { fetchOneCard } = apiStore;
+
+const isLoading = ref(false);
+
+const loadCardData = async () => {
+    isLoading.value = true;
+    const cardNumber = route.params.cardNumber;
+    await fetchOneCard(cardNumber);
+    isLoading.value = false;
+};
+
+onMounted(loadCardData);
+
+
 </script>
 
 <template>
-    <div class="card">
+    <div v-if="!isLoading && card !== null && card !== undefined" class="card">
         <header class="card-header">
             <p class="card-header-title">
                 Member Details
@@ -22,17 +36,23 @@ const card = ref({
                 <div class="media-content">
                     <p>Member Name:</p>
                     <p class="title is-4">{{ card.first_name + ' ' + card.last_name }}</p>
+                    <p>Member Email:</p>
+                    <p class="title is-6">{{ card.email }}</p>
                     <p>Card Number:</p>
                     <p class="title is-6">{{ card.card_number }}</p>
                     <p>Membership Tier:</p>
-                    <p class="title is-6">{{ card.membership_tier.toUpperCase() }}</p>
+                    <p class="title is-6">{{ card.membership_tier ? card.membership_tier.toUpperCase() : "N/A" }}</p>
+                    <p>Member Points:</p>
+                    <p class="title is-6">{{ card.points }}</p>
                 </div>
             </div>
-
-            <div class="content">
-                {{ card.user_description }}
-            </div>
         </div>
+    </div>
+    <div v-else-if="isLoading">
+        Loading...
+    </div>
+    <div v-else>
+        No card found.
     </div>
 </template>
 

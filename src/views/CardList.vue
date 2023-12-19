@@ -1,34 +1,20 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import CardItem from '../components/CardItem.vue'
+import { useApiStore } from '../stores/apiStore.js';
 
-const cards = ref([
-    {
-        "card_number": "4444-1000-2000-1000",
-        "first_name": "Jose",
-        "last_name": "Rizal",
-        "membership_tier": "gold"
-    },
-    {
-        "card_number": ">",
-        "first_name": "Juan",
-        "last_name": "Luna",
-        "membership_tier": "silver"
-    },
-    {
-        "card_number": "4444-1000-2000-3000",
-        "first_name": "Marcelo",
-        "last_name": "Del Pilar",
-        "membership_tier": "bronze"
-    }
-])
+const apiStore = useApiStore();
+
+onMounted(() => {
+    apiStore.fetchAllCards();
+});
 </script>
 
 <template>
     <div class="title custom-title">
-        <h1>Membership Cards</h1>
+        <h3 class="title is-3">Membership Cards</h3>
     </div>
-    <CardItem v-for="card in cards" :key="card.card_number" :card="card"></CardItem>
+    <CardItem v-for="card in apiStore.data" :key="card.card_number" :card="card"></CardItem>
 </template>
 
 <style scoped></style>

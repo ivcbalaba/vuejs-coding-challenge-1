@@ -3,27 +3,29 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-    <div>
-      <nav class="navbar custom-navbar" role="navigation" aria-label="main navigation">
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <RouterLink to="/cards/new" class="navbar-item">Add Card</RouterLink>
-            <RouterLink to="/cards" class="navbar-item">My Cards</RouterLink>
+  <div>
+    <header>
+      <div>
+        <nav class="navbar is-fixed-top custom-navbar" role="navigation" aria-label="main navigation">
+          <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+              <RouterLink :to="{ name: 'AddCard' }" class="navbar-item">Add Card</RouterLink>
+              <RouterLink :to="{ name: 'CardList' }" class="navbar-item">My Cards</RouterLink>
+            </div>
           </div>
-        </div>
-      </nav>
-    </div>
-  </header>
+        </nav>
+      </div>
+    </header>
 
-  <div class="container">
-    <RouterView />
+    <div class="container">
+      <RouterView />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .container {
-  margin: auto;
+  margin: 50px auto;
   padding: 50px 10px;
 }
 

@@ -7,10 +7,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
-      redirect: "/cards/new",
-    },
-    {
       path: "/cards/new",
       name: "AddCard",
       component: AddCardForm,
@@ -21,10 +17,13 @@ const router = createRouter({
       component: CardList,
     },
     {
-      path: "/cards/:id",
+      path: "/cards/:cardNumber",
       name: "CardDetails",
       component: CardDetails,
-      props: true,
+    },
+    {
+      path: "/:catchAll(.*)",
+      redirect: "/cards/new",
     },
   ],
 });
