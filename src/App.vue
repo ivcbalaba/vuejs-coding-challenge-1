@@ -1,22 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import NavBar from './components/NavBar.vue';
+
 </script>
 
 <template>
   <div>
-    <header>
-      <div>
-        <nav class="navbar is-fixed-top custom-navbar" role="navigation" aria-label="main navigation">
-          <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-              <RouterLink :to="{ name: 'AddCard' }" class="navbar-item">Add Card</RouterLink>
-              <RouterLink :to="{ name: 'CardList' }" class="navbar-item">My Cards</RouterLink>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
-
+    <NavBar />
     <div class="container">
       <RouterView />
     </div>
